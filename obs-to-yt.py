@@ -55,7 +55,7 @@ def get_authenticated_service(client_secrets_file: str, token_cache: str):
 
 def make_title():
     # DDMMYYYYHHMM -> ex: 300120261601
-    return 'ROAD TO 5 DIGIT: ' + datetime.now().strftime('%d%m%Y%H%M')
+    return datetime.now().strftime('%d%m%Y%H%M')
 
 
 def wait_until_file_stable(path: Path, checks: int, interval: int):
