@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 const API_BASE = "http://localhost:3001";
 
@@ -13,34 +14,35 @@ export default function Videos() {
     }, []);
 
     return (
-        <>
-            <div className="app">
-                <div style={{ width: 360 }}>
-                    <h2>Recordings</h2>
-                    {videos.map(v => (
-                        <div key={v.id} style={{ padding: 8, borderBottom: "1px solid #ddd", cursor: "pointer" }}
-                            onClick={() => setSelected(v)}>
-                            <div><b>{v.title}</b></div>
-                            <div style={{ fontSize: 12, opacity: 0.7 }}>{new Date(v.createdAt).toLocaleString()}</div>
-                        </div>
-                    ))}
-                </div>
-
-                <div style={{ flex: 1 }}>
-                    {selected ? (
-                        <>
-                            <h2>{selected.title}</h2>
-                            <video
-                                controls
-                                style={{ width: "100%", maxHeight: "75vh" }}
-                                src={`${API_BASE}/videos/${selected.id}/stream`}
-                            />
-                        </>
-                    ) : (
-                        <div>Select a video</div>
-                    )}
-                </div>
+        <div className="app">
+            <div className="list">
+                <h2 className="recordings"></h2>
+                {videos.map(v => (
+                    <div className="video-item" key={v.id}
+                        onClick={() => setSelected(v)}>
+                        <div className="video-title"></div>
+                        <div className="video-date">{new Date(v.createdAt).toLocaleString()}</div>
+                    </div>
+                ))}
             </div>
-        </>
+
+            <div className="preview">
+                {selected ? (
+                    <>
+                        <div className="span">
+                            <h2 className="video-title">{selected.title}</h2>
+                            <button className="close-display" onClick={() => setSelected(null)}>X</button>
+                        </div>
+                        <video
+                            controls
+                            className="video"
+                            src={`${API_BASE}/videos/${selected.id}/stream`}
+                        />
+                    </>
+                ) : (
+                    <div>select video</div>
+                )}
+            </div>
+        </div>
     );
 }

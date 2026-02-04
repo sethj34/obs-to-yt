@@ -1,0 +1,39 @@
+.app {
+    display: flex;
+}
+
+.list {
+    border: 1px solid pink !important;
+    width: 30vw;
+    height: 100vh;
+}
+
+.video {
+    width: 70vw;
+}
+
+.video-item{
+    padding: 8;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    height: 70px;
+}
+
+.video-title {
+    margin: 3vh 0 3vh 10px;
+    width: 50vw;
+}
+
+.close-display {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: black;
+    align-self: flex-end;
+    margin: 3vh 0 3vh 19%;
+}
+
+.span {
+    display: flex;
+}
