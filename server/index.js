@@ -4,6 +4,7 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import { spawn } from "child_process";
 
 const app = express();
 app.use(cors());
@@ -21,10 +22,11 @@ function saveDb(db) {
   fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2));
 }
 
-// ---- helpers
+// helpers
 function filePathFor(video) {
   return path.join(UPLOAD_DIR, video.filename);
 }
+
 function fileExists(p) {
   try {
     fs.accessSync(p, fs.constants.F_OK);
@@ -33,6 +35,12 @@ function fileExists(p) {
     return false;
   }
 }
+
+const jobs = new Map();
+function newJobId() {
+  return crypto.randomBytes(10).toString("hex");
+}
+
 function pruneMissingFiles(db) {
   const kept = [];
   const removed = [];
@@ -59,6 +67,7 @@ const storage = multer.diskStorage({
     cb(null, `${id}${ext}`);
   },
 });
+
 const upload = multer({ storage });
 
 app.post("/videos", upload.single("file"), (req, res) => {
